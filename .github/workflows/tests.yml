@@ -26,23 +26,11 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress --no-suggest
 
-      - name: Run PHPUnit tests
-        run: ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
-        env:
-          XDEBUG_MODE: coverage
+      - name: Run test suite
+        run: ./vendor/bin/phpunit --coverage-clover clover.xml
 
-      - name: Check code coverage
-        run: |
-          output=$(phpdbg -qrr ./vendor/bin/phpunit --coverage-text)
-          methods=$(echo "$output" | grep -Po '(?<=Methods:\s+)\d+\.\d+%')
-          lines=$(echo "$output" | grep -Po '(?<=Lines:\s+)\d+\.\d+%')
-      
-          if [[ "$methods" != "100.00%" || "$lines" != "100.00%" ]]; then
-            echo "Code coverage is not 100%:"
-            echo "Methods Coverage: $methods"
-            echo "Lines Coverage: $lines"
-            exit 1
-          fi
-        env:
-          XDEBUG_MODE: coverage
-      
+      - name: Coverage Check
+        uses: docker://ghcr.io/ericsizemore/phpunit-coverage-check-action
+        with:
+          clover_file: 'clover.xml'
+          threshold: 100
