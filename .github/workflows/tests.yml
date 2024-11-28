@@ -6,7 +6,6 @@ on:
       - main
       - develop
       - feature/**
-      - demo7
 
 jobs:
   tests:
