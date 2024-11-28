@@ -27,7 +27,7 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHPUnit tests
-        run: ./vendor/bin/phpunit
+        run: ./vendor/bin/phpunit./vendor/bin/phpunit tests --coverage-html coverage
         env:
           XDEBUG_MODE: coverage
 
