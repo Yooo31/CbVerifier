@@ -15,4 +15,10 @@ class CbVerifierTest extends TestCase
   {
     $this->verifier = new CbVerifier();
   }
+
+  public function testLength(): void
+  {
+    $this->assertTrue($this->verifier->Luhn('1234567890123456', 16));
+    $this->assertFalse($this->verifier->Luhn('123456789012345', 16));
+  }
 }
