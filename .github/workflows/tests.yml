@@ -33,11 +33,11 @@ jobs:
 
       - name: Check code coverage
         run: |
-          output=$(./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml)
+          output=$(phpdbg -qrr ./vendor/bin/phpunit --coverage-text)
           methods=$(echo "$output" | grep -Po '(?<=Methods:\s+)\d+\.\d+%')
           lines=$(echo "$output" | grep -Po '(?<=Lines:\s+)\d+\.\d+%')
-
-          if [[ "$methods" != "100.00 %" || "$lines" != "100.00 %" ]]; then
+      
+          if [[ "$methods" != "100.00%" || "$lines" != "100.00%" ]]; then
             echo "Code coverage is not 100%:"
             echo "Methods Coverage: $methods"
             echo "Lines Coverage: $lines"
@@ -45,3 +45,4 @@ jobs:
           fi
         env:
           XDEBUG_MODE: coverage
+      
