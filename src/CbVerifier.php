@@ -3,7 +3,7 @@
 namespace App\Services;
 
 class CbVerifier
-    {
+{
     // Fontion de prévérification de la carte bancaire
     function Luhn($numero, $longueur)
     {
