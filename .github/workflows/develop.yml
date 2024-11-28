@@ -26,8 +26,8 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Check PHPUnit
-        run: ls -la ${{ github.workspace }}/vendor/bin
+      - name: List files in working directory
+        run: ls -la ${{ github.workspace }}
         working-directory: ${{ github.workspace }}
 
       - name: Run tests
