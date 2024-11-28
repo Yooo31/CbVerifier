@@ -27,9 +27,9 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Check PHPUnit
-        run: ls -la ./vendor/bin
+        run: ls -la ${{ github.workspace }}/vendor/bin
         working-directory: ${{ github.workspace }}
 
       - name: Run tests
-        run: ./vendor/bin/phpunit tests --coverage-html coverage
+        run: ${{ github.workspace }}/vendor/bin/phpunit tests --coverage-html coverage
         working-directory: ${{ github.workspace }}
