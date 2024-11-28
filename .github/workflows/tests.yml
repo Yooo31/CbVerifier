@@ -31,11 +31,16 @@ jobs:
         env:
           XDEBUG_MODE: coverage
 
-      - name: Verify code coverage
+      - name: Check code coverage
         run: |
-          coverage=$(phpdbg -qrr ./vendor/bin/phpunit --coverage-text | grep -Po '(?<=Lines:)\s+\d+%')
-          if [ "$coverage" != "100%" ]; then
-            echo "Code coverage is not 100%: $coverage"
+          output=$(phpdbg -qrr ./vendor/bin/phpunit --coverage-text)
+          methods=$(echo "$output" | grep -Po '(?<=Methods:\s+)\d+\.\d+%')
+          lines=$(echo "$output" | grep -Po '(?<=Lines:\s+)\d+\.\d+%')
+
+          if [[ "$methods" != "100.00%" || "$lines" != "100.00%" ]]; then
+            echo "Code coverage is not 100%:"
+            echo "Methods Coverage: $methods"
+            echo "Lines Coverage: $lines"
             exit 1
           fi
         env:
