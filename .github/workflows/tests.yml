@@ -1,0 +1,42 @@
+name: Run Tests and Coverage
+
+on:
+  push:
+    branches:
+      - main
+      - develop
+      - feature/**
+      - demo7
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.2'
+          coverage: xdebug
+          tools: composer
+
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress --no-suggest
+
+      - name: Run PHPUnit tests
+        run: ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        env:
+          XDEBUG_MODE: coverage
+
+      - name: Verify code coverage
+        run: |
+          coverage=$(phpdbg -qrr ./vendor/bin/phpunit --coverage-text | grep -Po '(?<=Lines:)\s+\d+%')
+          if [ "$coverage" != "100%" ]; then
+            echo "Code coverage is not 100%: $coverage"
+            exit 1
+          fi
+        env:
+          XDEBUG_MODE: coverage
