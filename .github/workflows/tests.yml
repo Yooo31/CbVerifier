@@ -27,13 +27,13 @@ jobs:
         run: composer install --prefer-dist --no-progress --no-suggest
 
       - name: Run PHPUnit tests
-        run: phpdbg -qrr ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
+        run: ./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml
         env:
           XDEBUG_MODE: coverage
 
       - name: Check code coverage
         run: |
-          output=$(phpdbg -qrr ./vendor/bin/phpunit --coverage-text)
+          output=$(./vendor/bin/phpunit --coverage-text --coverage-clover=coverage.xml)
           methods=$(echo "$output" | grep -Po '(?<=Methods:\s+)\d+\.\d+%')
           lines=$(echo "$output" | grep -Po '(?<=Lines:\s+)\d+\.\d+%')
 
