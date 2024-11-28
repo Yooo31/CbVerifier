@@ -1,20 +1,17 @@
 <?php
 
-require 'src/Enigma.php';
+require 'src/CbVerifier.php';
 
-use App\Services\Enigma;
+use App\Services\CbVerifier;
 
-$enigma = new Enigma();
+$verifier = new CbVerifier();
 
-// Test d'encryptage
-$text = "Hey";
-$encrypted = $enigma->enigmify($text);
-echo "Texte encrypté : $encrypted\n";
-$encrypted = $enigma->enigmify($text);
-echo "Texte encrypté : $encrypted\n";
-$encrypted = $enigma->enigmify($text);
-echo "Texte encrypté : $encrypted\n";
+// $numero = '1234567890123456';
+$numero = '4603433767975432';
+$longueur = 16;
 
-// Test de décryptage
-$decrypted = $enigma->denigmify($encrypted);
-echo "Texte décrypté : $decrypted\n";
+if ($verifier->Luhn($numero, $longueur)) {
+    echo 'N° de carte valide';
+} else {
+    echo 'N° de carte invalide';
+}
