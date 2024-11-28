@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Install dependencies
         run: composer i
-        working-directory: ${{ github.workspace }}
+        working-directory: /home/runner/work/CbVerifier
 
   # Tests
   test:
@@ -19,4 +19,4 @@ jobs:
     steps:
       - name: Test
         run: ./vendor/bin/phpunit tests --coverage-html coverage
-        working-directory: ${{ github.workspace }}
+        working-directory: /home/runner/work/CbVerifier
