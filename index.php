@@ -6,12 +6,17 @@ use App\Services\CbVerifier;
 
 $verifier = new CbVerifier();
 
-// $numero = '1234567890123456';
-$numero = '4603433767975432';
-$longueur = 16;
+$cards = [
+    '4603433767975432',
+    '1234567890123456'
+];
+$length = 16;
 
-if ($verifier->Luhn($numero, $longueur)) {
-    echo 'N° de carte valide';
-} else {
-    echo 'N° de carte invalide';
+foreach ($cards as $numero) {
+    if ($verifier->Luhn($numero, $length)) {
+        echo 'N° de carte ' . $numero . ' valide';
+    } else {
+        echo 'N° de carte ' . $numero . ' invalide';
+    }
+    echo PHP_EOL;
 }
